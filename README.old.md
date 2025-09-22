@@ -1,1 +1,0 @@
-# Sortlab---Sorting-Algorithm-Simulator
