@@ -1,103 +1,136 @@
-import Image from "next/image";
+'use client'
+import { Inter } from 'next/font/google'
+import Navbar from '@/component/navbar' 
+import { Button } from '@/ui/button';
+import { Video, CheckSquare, Award } from "lucide-react";
+import Footer from '@/component/footer';
 
-export default function Home() {
+const inter = Inter({ subsets: ['latin'] })
+
+const Page = () => {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-white">
+      <Navbar />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Hero Section */}
+      <div className="relative flex flex-col pt-50 px-55 py-30">
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white to-transparent z-0" />
+
+        {/* Konten Hero */}
+        <div className="relative z-10">
+          {/* Badge */}
+          <div className="flex items-center gap-2 bg-[#471BCC] text-white px-4 py-2 rounded-full w-fit shadow-md mb-6">
+            <span className="bg-white text-gray-900 text-xs font-semibold px-2 py-0.5 rounded-full">
+              New
+            </span>
+            <span className="text-sm font-medium">
+              Competitions are now open!
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1 className="text-[50px] font-semibold text-black">
+            Learn Computational <br />
+            Thinking from Scratch
+          </h1>
+
+          {/* Subheadline */}
+          <h2 className="mt-4 text-[16px] text-gray-700">
+            Join SortLab and embark on a journey to master algorithms and data structures <br />
+            through interactive practice and competitive coding challenges.
+          </h2>
+
+          {/* Features */}
+          <div className="flex gap-6 text-sm text-black/80 mt-10">
+            <span className="flex items-center gap-2">
+              <Video className="h-5 w-5" /> ONLINE
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckSquare className="h-5 w-5" /> HANDS-ON
+            </span>
+            <span className="flex items-center gap-2">
+              <Award className="h-5 w-5" /> CERTIFICATE
+            </span>
+          </div>
+
+          {/* Button */}
+          <div>
+            <Button className="mt-10 bg-[#471BCC] hover:bg-[#6F4CD8] text-[14px] px-6 py-3 rounded-md shadow-md">
+              Join Now
+            </Button>
+          </div>
+
+          {/* Media partners */}
+          <div className="flex flex-col pt-20">
+            <h3 className="text-sm text-gray-700 mb-4">Featured On</h3>
+            <div className="flex items-center gap-8">
+              <img src="/google.png" alt="Google" className="h-6 w-auto" />
+              <img src="/amazon.png" alt="Amazon" className="h-6 w-auto" />
+              <img src="/microsoft.png" alt="Microsoft" className="h-6 w-auto" />
+              <img src="/paypal.png" alt="PayPal" className="h-6 w-auto" />
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+      {/* End Hero Section */}
+
+      <div className="relative flex flex-col items-center py-20 bg-[#471BCC] px-6">
+      {/* Stats Section */}
+        <div className="text-center">
+          <h2 className="text-md text-white mb-4 tracking-wide">
+            SOLUTIONS FOR DEVELOPERS
+          </h2>
+          <h1 className="text-3xl font-semibold text-white mb-2">
+            Single platform to learn, practice, and compete in coding
+          </h1>
+          <h4 className="text-sm text-white mb-10">
+            Join SortLab and embark on a journey to master algorithms and data structures through interactive practice and competitive coding challenges.
+          </h4>
+        </div>
+        
+        <div className="flex flex-wrap justify-center gap-8">
+          {/* Card 1 */}
+          <div className="flex items-center p-6 bg-white/10 rounded-lg shadow-md">
+            <img src="/community.png" className="h-16 w-auto" />
+            <div className="flex flex-col items-start ml-6">
+              <h1 className="text-4xl font-semibold text-white mb-1">100K+</h1>
+              <h2 className="text-md text-white">Active Users</h2>
+            </div>
+          </div>
+
+          {/* Card 2 */}
+          <div className="flex items-center p-6 bg-white/10 rounded-lg shadow-md">
+            <img src="/library.png" className="h-16 w-auto" />
+            <div className="flex flex-col items-start ml-6">
+              <h1 className="text-4xl font-semibold text-white mb-1">1000+</h1>
+              <h2 className="text-md text-white">Skills in Library</h2>
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="flex items-center p-6 bg-white/10 rounded-lg shadow-md">
+            <img src="/school.png" className="h-16 w-auto" />
+            <div className="flex flex-col items-start ml-6">
+              <h1 className="text-4xl font-semibold text-white mb-1">100+</h1>
+              <h2 className="text-md text-white">School Partners</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* End Stats Section */}
+
+      {/* Parallax Section */}
+      <div>
+        
+      </div>
+
+
+      {/* Footer */}
+      <Footer />
+
     </div>
-  );
+  )
 }
+
+export default Page
