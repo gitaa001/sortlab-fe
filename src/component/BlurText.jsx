@@ -19,10 +19,10 @@ const BlurText = ({
   direction = 'top',
   threshold = 0.1,
   rootMargin = '0px',
-  animationFrom,
-  animationTo,
+  animationFrom = null,
+  animationTo = null,
   easing = t => t,
-  onAnimationComplete,
+  onAnimationComplete = null,
   stepDuration = 0.35
 }) => {
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');

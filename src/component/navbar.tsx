@@ -1,6 +1,7 @@
 "use client"
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ChevronDown, User, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/authContext';
@@ -11,6 +12,7 @@ export default function Navbar() {
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { user, logout, isAuthenticated } = useAuth();
+  const pathname = usePathname();
 
   const handleUserMenuClick = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
@@ -21,32 +23,32 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 px-10">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
+        <div className="grid grid-cols-3 items-center h-16">
+          <div className="flex items-center justify-start">
             <Link href="/" className="text-2xl font-bold text-[#471BCC]">
               SortLab
             </Link>
           </div>
-          <div className="flex-1 flex justify-center">
+          <div className="flex justify-center">
             <div className="flex items-center space-x-8">
               <div className="relative">
-                <Link href="/practice" className='text-m text-black hover:text-gray-700'>
+                <Link href="/practice" className={`text-m hover:text-gray-700 ${pathname === '/practice' ? 'text-[#471BCC] font-semibold' : 'text-black'}`}>
                   Practice
                 </Link>
               </div>
               <div className="relative">
-                <Link href="/compete" className='text-m text-black hover:text-gray-700'>
+                <Link href="/compete" className={`text-m hover:text-gray-700 ${pathname === '/compete' ? 'text-[#471BCC] font-semibold' : 'text-black'}`}>
                   Compete
                 </Link>
               </div>
               <div className="relative">
-                <Link href="/leaderboard" className='text-m text-black hover:text-gray-700'>
+                <Link href="/leaderboard" className={`text-m hover:text-gray-700 ${pathname === '/leaderboard' ? 'text-[#471BCC] font-semibold' : 'text-black'}`}>
                   Leaderboard
                 </Link>
               </div>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-end space-x-4">
             {isAuthenticated ? (
               <div className="relative">
                 <button

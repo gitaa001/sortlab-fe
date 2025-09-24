@@ -4,6 +4,7 @@ import Navbar from '@/component/navbar'
 import { Button } from '@/ui/button';
 import { Video, CheckSquare, Award } from "lucide-react";
 import Footer from '@/component/footer';
+import BlurText from '@/component/BlurText';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,16 +31,28 @@ const Page = () => {
           </div>
 
           {/* Headline */}
-          <h1 className="text-[50px] font-semibold text-black">
-            Learn Computational <br />
-            Thinking from Scratch
-          </h1>
+          <div className="text-[50px] font-semibold text-black leading-tight">
+            <BlurText 
+              text="Learn Computational"
+              className="block"
+              delay={100}
+              animateBy="words"
+              direction="top"
+            />
+            <BlurText 
+              text="Thinking from Scratch"
+              className="block"
+              delay={150}
+              animateBy="words"
+              direction="top"
+            />
+          </div>
 
           {/* Subheadline */}
-          <h2 className="mt-4 text-[16px] text-gray-700">
-            Join SortLab and embark on a journey to master algorithms and data structures <br />
+          <h3 className="mt-4 text-[16px] text-gray-700 max-w-3xl">
+            Join SortLab and embark on a journey to master algorithms and data structures <br/>
             through interactive practice and competitive coding challenges.
-          </h2>
+          </h3>
 
           {/* Features */}
           <div className="flex gap-6 text-sm text-black/80 mt-10">
@@ -62,7 +75,7 @@ const Page = () => {
           </div>
 
           {/* Media partners */}
-          <div className="flex flex-col pt-20">
+          <div className="flex flex-col pt-30">
             <h3 className="text-sm text-gray-700 mb-4">Featured On</h3>
             <div className="flex items-center gap-8">
               <img src="/google.png" alt="Google" className="h-6 w-auto" />
@@ -125,7 +138,7 @@ const Page = () => {
         
       </div>
 
-
+      
       {/* Footer */}
       <Footer />
 
