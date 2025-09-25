@@ -2,8 +2,7 @@ import Quiz from "@/component/quiz";
 import Breadcrumb from "@/component/breadcrumb";
 import Navbar from "@/component/navbar";
 import Footer from "@/component/footer";
-import Link from "next/link";
-
+import Link from "next/dist/client/link";
 
 export default function Page() {
     const breadcrumbItems = [
@@ -54,7 +53,7 @@ export default function Page() {
             </div>
 
             <div className="flex justify-center mt-2 mb-10 pt-6">
-                <Link href="/practice">
+                 <Link href="/practice">
                     <button className="bg-purple-500 text-white px-8 py-3 rounded-lg hover:bg-purple-600 font-semibold">
                         Finish Quiz
                     </button>

@@ -2,30 +2,29 @@ import Quiz from "@/component/quiz";
 import Breadcrumb from "@/component/breadcrumb";
 import Navbar from "@/component/navbar";
 import Footer from "@/component/footer";
-import Link from "next/link";
-
+import Link from 'next/link';
 
 export default function Page() {
     const breadcrumbItems = [
         { label: "All Tracks", href: "/compete" },
-        { label: "Bubble Sort Quiz" }
+        { label: "Selection Sort Quiz" }
     ];
 
     const quizzes = [
         {
-            question: "Using Bubble Sort on this array, how does the array look like after the FIRST run?",
-            array: [7, 14, 11, 8, 9],
-            correctAnswer: [7, 11, 8, 9, 14],
+            question: "Using Selection Sort on this array, how does the array look like after the FIRST iteration?",
+            array: [64, 25, 12, 22, 11],
+            correctAnswer: [11, 25, 12, 22, 64],
         },
         {
-            question: "Using Bubble Sort, what does the array look like after the SECOND run?",
-            array: [5, 3, 8, 4, 2],
-            correctAnswer: [3, 4, 2, 5, 8],
+            question: "Using Selection Sort, what does the array look like after the SECOND iteration?",
+            array: [29, 10, 14, 37, 13],
+            correctAnswer: [10, 13, 14, 37, 29],
         },
         {
-            question: "Bubble Sort is performed on this array. How does the array look like after it is FULLY sorted?",
-            array: [10, 2, 7, 5, 3],
-            correctAnswer: [2, 3, 5, 7, 10],
+            question: "Selection Sort is performed on this array. How does the array look like after it is FULLY sorted?",
+            array: [5, 2, 4, 6, 1, 3],
+            correctAnswer: [1, 2, 3, 4, 5, 6],
         },
     ];
 
@@ -37,8 +36,8 @@ export default function Page() {
                 <Breadcrumb items={breadcrumbItems} />
                 
                 <div className="mb-8">
-                    <h1 className="text-2xl font-bold mb-2">Bubble Sort Quiz</h1>
-                    <p className="text-gray-600">Test your understanding of the Bubble Sort algorithm</p>
+                    <h1 className="text-2xl font-bold mb-2">Selection Sort Quiz</h1>
+                    <p className="text-gray-600">Test your understanding of the Selection Sort algorithm</p>
                 </div>
 
                 <div className="space-y-6">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface QuizProps {
@@ -15,7 +15,17 @@ export default function Quiz({ question, array, correctAnswer }: QuizProps) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [points, setPoints] = useState(0); // ✅ poin per kuis
+  const [totalPoints, setTotalPoints] = useState(0); // ✅ poin akumulasi user
   const router = useRouter();
+
+  useEffect(() => {
+    // ambil poin akumulasi dari localStorage saat load
+    const savedPoints = localStorage.getItem("quizPoints");
+    if (savedPoints) {
+      setTotalPoints(Number(savedPoints));
+    }
+  }, []);
 
   const handleChange = (value: string, idx: number) => {
     const newAns = [...answer];
@@ -25,15 +35,29 @@ export default function Quiz({ question, array, correctAnswer }: QuizProps) {
 
   const checkAnswer = () => {
     const numericAns = answer.map(Number);
-    const isCorrect = JSON.stringify(numericAns) === JSON.stringify(correctAnswer);
-    
+    const isCorrect =
+      JSON.stringify(numericAns) === JSON.stringify(correctAnswer);
+
     if (isCorrect) {
       setResult(true);
       setIsCompleted(true);
+
+      // Hitung poin berdasarkan attempts
+      let earned = 0;
+      if (attempts === 0) earned = 10;
+      else if (attempts === 1) earned = 5;
+      else if (attempts === 2) earned = 2;
+
+      setPoints(earned);
+      const newTotal = totalPoints + earned;
+      setTotalPoints(newTotal);
+
+      // simpan ke localStorage (dummy account)
+      localStorage.setItem("quizPoints", newTotal.toString());
     } else {
-      setAttempts(prev => prev + 1);
+      setAttempts((prev) => prev + 1);
       setResult(false);
-      
+
       // Auto show answer after 3 wrong attempts
       if (attempts + 1 >= 3) {
         setShowAnswer(true);
@@ -50,14 +74,16 @@ export default function Quiz({ question, array, correctAnswer }: QuizProps) {
   };
 
   const handleFinish = () => {
-    router.push('/quiz/finished');
+    router.push("/quiz/finished");
   };
 
   return (
     <div className="border rounded-lg p-6 bg-gray-50 shadow mb-6">
       <h3 className="text-lg font-semibold mb-3">Exercise:</h3>
       <p className="mb-3">{question}</p>
-      <p className="mb-4">Array: <code>[{array.join(", ")}]</code></p>
+      <p className="mb-4">
+        Array: <code>[{array.join(", ")}]</code>
+      </p>
 
       {/* Attempts Counter */}
       <div className="mb-4">
@@ -93,46 +119,41 @@ export default function Quiz({ question, array, correctAnswer }: QuizProps) {
             Submit Answer
           </button>
         )}
-        
+
         <button
           onClick={handleShowAnswer}
           className={`px-4 py-2 rounded ${
-            attempts >= 3 
-              ? 'bg-blue-500 hover:bg-blue-600 text-white' 
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            attempts >= 3
+              ? "bg-blue-500 hover:bg-blue-600 text-white"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
           disabled={attempts < 3}
-          title={attempts < 3 ? "Available after 3 wrong attempts" : "Show correct answer"}
+          title={
+            attempts < 3
+              ? "Available after 3 wrong attempts"
+              : "Show correct answer"
+          }
         >
           Show Answer
         </button>
 
+        {isCompleted && (
+          <button
+            onClick={handleFinish}
+            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+          >
+            Finish
+          </button>
+        )}
       </div>
-
-      {/* Warning Messages */}
-      {attempts === 1 && result === false && (
-        <div className="mt-4 text-yellow-600 font-semibold">
-          ⚠️ Wrong answer! 2 attempts remaining.
-        </div>
-      )}
-      
-      {attempts === 2 && result === false && (
-        <div className="mt-4 text-orange-600 font-semibold">
-          ⚠️ Wrong answer! 1 attempt remaining. Be careful!
-        </div>
-      )}
-
-      {attempts >= 3 && result === false && !showAnswer && (
-        <div className="mt-4 text-red-600 font-semibold">
-          ❌ No more attempts! You can now view the answer.
-        </div>
-      )}
 
       {/* Results */}
       {result !== null && !showAnswer && (
         <div className="mt-4">
           {result ? (
-            <p className="text-green-600 font-semibold">✅ Correct! Well done!</p>
+            <p className="text-green-600 font-semibold">
+              ✅ Correct! You earned {points} points.
+            </p>
           ) : (
             <p className="text-red-600 font-semibold">❌ Wrong, try again.</p>
           )}
@@ -141,9 +162,15 @@ export default function Quiz({ question, array, correctAnswer }: QuizProps) {
 
       {showAnswer && (
         <div className="mt-4 text-blue-600 font-semibold">
-          ✅ Correct Answer: [{correctAnswer.join(", ")}]
+          ✅ Correct Answer: [{correctAnswer.join(", ")}] <br />
+          You earned {points} points.
         </div>
       )}
+
+      {/* Total Points */}
+      <div className="mt-6 text-gray-800 font-bold">
+        ⭐ Total Points: {totalPoints}
+      </div>
     </div>
   );
 }

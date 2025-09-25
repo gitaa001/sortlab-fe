@@ -6,6 +6,7 @@ import { Button } from '@/ui/button';
 import { Video, CheckSquare, Award } from "lucide-react";
 import Footer from '@/component/footer';
 import BlurText from '@/component/BlurText';
+import { motion } from 'motion/react';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -18,9 +19,26 @@ const Page = () => {
       {/* Hero Section */}
       <div className="relative flex flex-col pt-50 px-55 py-30">
 
-        <div className="absolute right-30 top-35 w-3/4 h-3/4" >
-          <img src="/elmt.png" alt="Hero Image" className="w-full h-full object-contain object-right opacity-60" />
-        </div>
+      <motion.div
+        className="absolute right-30 top-35 w-3/4 h-3/4"
+        initial={{ opacity: 0, scale: 0.9, y: 40 }}
+        animate={{ opacity: 0.6, scale: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        <motion.img
+          src="/elmt.png"
+          alt="Hero Image"
+          className="w-full h-full object-contain object-right"
+          animate={{
+            y: [0, -10, 0], // naik turun pelan
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.div>
 
         {/* Konten Hero */}
         <div className="relative z-10 max-w-3xl">
@@ -75,9 +93,11 @@ const Page = () => {
 
           {/* Button */}
           <div>
-            <Button className="mt-10 bg-[#471BCC] hover:bg-[#6F4CD8] text-[14px] px-6 py-3 rounded-md shadow-md">
-              Join Now
-            </Button>
+            <Link href="/login">
+              <Button className="mt-10 bg-[#471BCC] hover:bg-[#6F4CD8] text-[14px] px-6 py-3 rounded-md shadow-md">
+                Join Now
+              </Button>
+            </Link>
           </div>
 
           {/* Media partners */}

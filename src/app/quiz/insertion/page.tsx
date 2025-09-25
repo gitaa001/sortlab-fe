@@ -2,30 +2,29 @@ import Quiz from "@/component/quiz";
 import Breadcrumb from "@/component/breadcrumb";
 import Navbar from "@/component/navbar";
 import Footer from "@/component/footer";
-import Link from "next/link";
-
+import Link from 'next/link';
 
 export default function Page() {
     const breadcrumbItems = [
         { label: "All Tracks", href: "/compete" },
-        { label: "Bubble Sort Quiz" }
+        { label: "Insertion Sort Quiz" }
     ];
 
     const quizzes = [
         {
-            question: "Using Bubble Sort on this array, how does the array look like after the FIRST run?",
-            array: [7, 14, 11, 8, 9],
-            correctAnswer: [7, 11, 8, 9, 14],
-        },
-        {
-            question: "Using Bubble Sort, what does the array look like after the SECOND run?",
+            question: "Using Insertion Sort on this array, how does the array look like after the FIRST insertion (element 3)?",
             array: [5, 3, 8, 4, 2],
-            correctAnswer: [3, 4, 2, 5, 8],
+            correctAnswer: [3, 5, 8, 4, 2],
         },
         {
-            question: "Bubble Sort is performed on this array. How does the array look like after it is FULLY sorted?",
-            array: [10, 2, 7, 5, 3],
-            correctAnswer: [2, 3, 5, 7, 10],
+            question: "Using Insertion Sort, what does the array look like after the SECOND insertion (element 8)?",
+            array: [12, 11, 13, 5, 6],
+            correctAnswer: [11, 12, 13, 5, 6],
+        },
+        {
+            question: "Insertion Sort is performed on this array. How does the array look like after it is FULLY sorted?",
+            array: [4, 1, 3, 9, 7],
+            correctAnswer: [1, 3, 4, 7, 9],
         },
     ];
 
@@ -37,8 +36,8 @@ export default function Page() {
                 <Breadcrumb items={breadcrumbItems} />
                 
                 <div className="mb-8">
-                    <h1 className="text-2xl font-bold mb-2">Bubble Sort Quiz</h1>
-                    <p className="text-gray-600">Test your understanding of the Bubble Sort algorithm</p>
+                    <h1 className="text-2xl font-bold mb-2">Insertion Sort Quiz</h1>
+                    <p className="text-gray-600">Test your understanding of the Insertion Sort algorithm</p>
                 </div>
 
                 <div className="space-y-6">

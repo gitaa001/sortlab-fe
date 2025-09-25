@@ -57,7 +57,7 @@ export function getSortingSteps(algorithm: string, inputArr: number[]): StepsRes
     }
   } else if (algorithm === 'insertion') {
     for (let i = 1; i < n; i++) {
-      let key = a[i];
+      const key = a[i];
       let j = i - 1;
       // compare keys to find position
       while (j >= 0) {
@@ -110,7 +110,7 @@ export function getSortingSteps(algorithm: string, inputArr: number[]): StepsRes
   } else if (algorithm === 'quick') {
     function quickSort(l: number, r: number) {
       if (l >= r) return;
-      let pivot = a[r];
+      const pivot = a[r];
       let i = l - 1;
       for (let j = l; j < r; j++) {
         pushCompare(actions, snapshots, a, j, r);
