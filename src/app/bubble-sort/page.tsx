@@ -59,7 +59,7 @@ const Page = () => {
         </aside>
 
         {/* Right Content */}
-        <main className="flex-1 mb-10">
+        <main className="flex-1 mb-10 min-h-[600px]">
           {activeTab === 'library' && (
             <section>
               <LibraryLayout
@@ -99,7 +99,7 @@ const Page = () => {
                         <li>It is an in-place sorting algorithm.</li>
                         <li>Not suitable for large datasets due to its O(n²) time complexity.</li>
                         <li>The graph describing the Bubble Sort time complexity looks like this:</li>
-                        <img src="/b-sort.png" alt="Bubble Sort Complexity Graph" className="mt-2" />
+                        <img src="/bubble/b-sort.png" alt="Bubble Sort Complexity Graph" className="mt-2" />
                       </ul>
                   </div>
                 }

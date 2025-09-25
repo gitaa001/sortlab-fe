@@ -8,12 +8,12 @@ import { useState } from 'react';
 import Visualizer from '@/component/layout-template/visualizer';
 
 const Page = () => {
-  const breadcrumbItems = [
-    { label: "All Tracks", href: "/practice" },
-    { label: "Selection Sort" }
-  ];     
+    const breadcrumbItems = [
+        { label: "All Tracks", href: "/practice" },
+        { label: "Insertion Sort" }
+    ];     
 
-  const [activeTab, setActiveTab] = useState<'library' | 'visualizer'>('library');
+    const [activeTab, setActiveTab] = useState<'library' | 'visualizer'>('library');
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -29,7 +29,7 @@ const Page = () => {
       <div className="flex flex-1 px-20 mt-6 gap-8">
         {/* Sidebar */}
         <aside className="w-48">
-          <h2 className="font-bold mb-5 text-xl">Selection Sort</h2>
+          <h2 className="font-bold mb-5 text-xl">Insertion Sort</h2>
           <ul className="space-y-1">
             <li>
               <button
@@ -59,33 +59,35 @@ const Page = () => {
         </aside>
 
         {/* Right Content */}
+
+        {/* LIBRARY */}
         <main className="flex-1 mb-10 min-h-[600px]">
           {activeTab === 'library' && (
             <section>
               <LibraryLayout
-                title="Selection Sort"
-                videoUrl="https://youtube.com/embed/g-PGLbMth_g?si=vCK0Taw5olrpUmR1"
+                title="Insertion Sort"
+                videoUrl="https://www.youtube.com/embed/JU767SDMDvA"
                 content={
                   <div>
                     <p>
-                      Selection Sort is a simple comparison-based sorting algorithm.
-                      It divides the array into two parts: a sorted part and an unsorted part.
-                      In each iteration, the smallest (or largest) element from the unsorted part
-                      is selected and swapped with the first element of the unsorted part.
+                      Insertion Sort is a simple and intuitive sorting algorithm that builds a sorted array one element at a time. 
+                      It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort. 
+                      However, it has several advantages, including simplicity, efficiency for small datasets, and stability.
                     </p>
 
-                    <h4 className="font-semibold mt-4 mb-2">How Selection Sort Works:</h4>
+                    <h4 className="font-semibold mt-4 mb-2">How Insertion Sort Works:</h4>
                     <ol className="list-decimal list-inside space-y-1">
-                      <li>Start from the first element of the array.</li>
-                      <li>Find the minimum element in the unsorted part of the array.</li>
-                      <li>Swap the minimum element with the first element of the unsorted part.</li>
-                      <li>Move the boundary of the sorted and unsorted parts by one, and repeat until sorted.</li>
+                      <li>Start from the second element (index 1) of the array.</li>
+                      <li>Compare the current element with the elements in the sorted portion (to its left).</li>
+                      <li>Shift all larger elements in the sorted portion one position to the right to make space for the current element.</li>
+                      <li>Insert the current element into its correct position in the sorted portion.</li>
+                      <li>Repeat this process for all elements in the array until the entire array is sorted.</li>
                     </ol>
 
                     <h4 className="font-semibold mt-4 mb-2">Complexity Analysis:</h4>
                     <ul className="list-disc list-inside">
                       <li>
-                        <strong>Time Complexity:</strong> O(n²) for best, average, and worst cases.
+                        <strong>Time Complexity:</strong> O(n²) in the worst and average cases, O(n) in the best case (when the array is already sorted).
                       </li>
                       <li>
                         <strong>Space Complexity:</strong> O(1) (in-place sorting).
@@ -94,11 +96,11 @@ const Page = () => {
 
                     <h4 className="font-semibold mt-4 mb-2">Characteristics:</h4>
                     <ul className="list-disc list-inside">
-                      <li>Selection Sort is <strong>not stable</strong> (relative order of equal elements may change).</li>
+                      <li>Insertion Sort is stable.</li>
                       <li>It is an in-place sorting algorithm.</li>
-                      <li>Simple to implement but inefficient for large datasets.</li>
-                      <li>The graph describing the Selection Sort time complexity looks like this:</li>
-                      <img src="/selection/s-sort.png" alt="Selection Sort Complexity Graph" className="mt-2" />
+                      <li>Efficient for small datasets and partially sorted arrays.</li>
+                      <li>The graph describing the Insertion Sort time complexity looks like this:</li>
+                      <img src="/insertion/i-sort.png" alt="Insertion Sort Complexity Graph" className="mt-2" />
                     </ul>
                   </div>
                 }
@@ -110,8 +112,8 @@ const Page = () => {
           {activeTab === 'visualizer' && (
             <section>
               <div className="bg-white border rounded-lg p-6">
-                <h2 className="text-xl font-bold mb-4">Selection Sort Visualizer</h2>
-                <Visualizer algorithm="selection" initialSize={8} />
+                <h2 className="text-xl font-bold mb-4">Insertion Sort Visualizer</h2>
+                <Visualizer algorithm="insertion" initialSize={8} />
               </div>
             </section>
           )}
@@ -125,4 +127,3 @@ const Page = () => {
 };
 
 export default Page;
-

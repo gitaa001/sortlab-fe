@@ -25,7 +25,7 @@ const Page = () => {
                 image="/bubble.png"
                 title="Bubble Sort"
                 progress={80}
-                link='/bubble-sort'
+                link='quiz/bubble'
                 hoverText='Start Quiz'
             />
             <Card

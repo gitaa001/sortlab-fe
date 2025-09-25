@@ -10,13 +10,13 @@ interface Props {
 
 export default function Visualizer({ algorithm, initialSize = 8 }: Props) {
   const [size, setSize] = useState<number>(initialSize);
-  const [valuesInput, setValuesInput] = useState<string>(''); // optional comma list
+  const [valuesInput, setValuesInput] = useState<string>(''); 
   const [array, setArray] = useState<number[]>([]);
   const [snapshots, setSnapshots] = useState<number[][]>([]);
   const [actionsCount, setActionsCount] = useState(0);
   const [step, setStep] = useState(0); // current index in snapshots
   const [playing, setPlaying] = useState(false);
-  const [speed, setSpeed] = useState(400); // ms per step
+  const [speed, setSpeed] = useState(400); 
   const timerRef = useRef<number | null>(null);
   const [highlight, setHighlight] = useState<number[]>([]);
 

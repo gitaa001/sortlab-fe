@@ -24,36 +24,38 @@ export default function Slide({
     const slideInterval = setInterval(next, autoSlideInterval)
     return () => clearInterval(slideInterval)
   }, [])
+  
   return (
-    <div className="overflow-hidden relative">
+    <div className="overflow-hidden relative max-w-2xl mx-auto h-64 rounded-lg shadow-sm">
       <div
-        className="flex transition-transform ease-out duration-500"
+        className="flex transition-transform ease-out duration-500 h-full"
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
         {slides}
       </div>
-      <div className="absolute inset-0 flex items-center justify-between p-4">
+      <div className="absolute inset-0 flex items-center justify-between p-2">
         <button
           onClick={prev}
           className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white"
         >
-          <ChevronLeft size={40} />
+          <ChevronLeft size={20} />
         </button>
         <button
           onClick={next}
           className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white"
         >
-        <ChevronRight size={40} />
+        <ChevronRight size={20} />
         </button>
       </div>
 
-      <div className="absolute bottom-4 right-0 left-0">
-        <div className="flex items-center justify-center gap-2">
+      <div className="absolute bottom-2 right-0 left-0">
+        <div className="flex items-center justify-center gap-1">
           {slides.map((_, i) => (
             <div
+              key={i}
               className={`
-              transition-all w-3 h-3 bg-white rounded-full
-              ${curr === i ? "p-2" : "bg-opacity-50"}
+              transition-all w-2 h-2 bg-white rounded-full
+              ${curr === i ? "w-4" : "bg-opacity-50"}
             `}
             />
           ))}
