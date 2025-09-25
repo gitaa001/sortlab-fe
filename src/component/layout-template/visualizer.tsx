@@ -209,9 +209,10 @@ export default function Visualizer({ algorithm, initialSize = 8 }: Props) {
               <div key={idx} className="flex flex-col items-center">
                 <div
                   title={`${val}`}
-                  style={{ height: `${height}px`, width: '28px' }}
-                  className={`rounded-sm transition-all ${isHighlighted ? 'bg-amber-400' : 'bg-gray-400'}`}
+                  style={{ height: `${height}px`, width: '36px' }}
+                  className={`transition-all ${isHighlighted ? 'bg-amber-400' : 'bg-gray-400'}`}
                 />
+                <span className="text-xs text-gray-600 mt-1">{val}</span>
               </div>
             );
           })}

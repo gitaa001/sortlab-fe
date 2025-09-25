@@ -1,10 +1,12 @@
 'use client'
 import { Inter } from 'next/font/google'
+import Link from 'next/link';
 import Navbar from '@/component/navbar' 
 import { Button } from '@/ui/button';
 import { Video, CheckSquare, Award } from "lucide-react";
 import Footer from '@/component/footer';
 import BlurText from '@/component/BlurText';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,20 +17,24 @@ const Page = () => {
 
       {/* Hero Section */}
       <div className="relative flex flex-col pt-50 px-55 py-30">
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white to-transparent z-0" />
+
+        <div className="absolute right-30 top-35 w-3/4 h-3/4" >
+          <img src="/elmt.png" alt="Hero Image" className="w-full h-full object-contain object-right opacity-60" />
+        </div>
 
         {/* Konten Hero */}
-        <div className="relative z-10">
+        <div className="relative z-10 max-w-3xl">
           {/* Badge */}
-          <div className="flex items-center gap-2 bg-[#471BCC] text-white px-4 py-2 rounded-full w-fit shadow-md mb-6">
-            <span className="bg-white text-gray-900 text-xs font-semibold px-2 py-0.5 rounded-full">
-              New
-            </span>
-            <span className="text-sm font-medium">
-              Competitions are now open!
-            </span>
-          </div>
+          <Link href="/leaderboard">
+            <div className="flex items-center gap-2 bg-[#471BCC] text-white px-4 py-2 rounded-full w-fit shadow-md mb-6 hover:bg-[#6F4CD8] transition-colors cursor-pointer">
+              <span className="bg-white text-gray-900 text-xs font-semibold px-2 py-0.5 rounded-full">
+                New
+              </span>
+              <span className="text-sm font-medium">
+                Leaderboard is now open!
+              </span>
+            </div>
+          </Link>
 
           {/* Headline */}
           <div className="text-[50px] font-semibold text-black leading-tight">
@@ -88,8 +94,8 @@ const Page = () => {
       </div>
       {/* End Hero Section */}
 
-      <div className="relative flex flex-col items-center py-20 bg-[#471BCC] px-6">
       {/* Stats Section */}
+      <div className="relative flex flex-col items-center py-20 bg-[#471BCC] px-6">
         <div className="text-center">
           <h2 className="text-md text-white mb-4 tracking-wide">
             SOLUTIONS FOR DEVELOPERS
@@ -133,15 +139,7 @@ const Page = () => {
       </div>
       {/* End Stats Section */}
 
-      {/* Parallax Section */}
-      <div>
-        
-      </div>
-
-      
-      {/* Footer */}
       <Footer />
-
     </div>
   )
 }
