@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const userData = await api.getMe();
         setUser(userData);
       } catch (err) {
-        console.error('❌ Auth check failed:', err);
+        console.error('Auth check failed:', err);
         localStorage.removeItem('auth_token');
       } finally {
         setLoading(false);
@@ -60,7 +60,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       router.push('/profile');
     } catch (err: unknown) {
       console.error('Login failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Login gagal, periksa email/password';
+      const errorMessage = err instanceof Error ? err.message : 'Login failed, please check your email/password';
       throw new Error(errorMessage);
     } finally {
       setLoading(false);
@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       await login(username, password);
     } catch (err: unknown) {
       console.error('Registration failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Registrasi gagal';
+      const errorMessage = err instanceof Error ? err.message : 'Registration failed';
       throw new Error(errorMessage);
     } finally {
       setLoading(false);

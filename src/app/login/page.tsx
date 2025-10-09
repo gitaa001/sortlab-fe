@@ -20,8 +20,10 @@ export default function SignInPage() {
       // ✅ Gunakan fungsi login dari context (bukan fetch manual)
       await login(email, password);
       router.push("/profile"); // arahkan ke halaman profile
-    } catch (err: any) {
-      alert(err.message || "Login gagal. Coba lagi ya!");
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Login failed. Please try again.";
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
