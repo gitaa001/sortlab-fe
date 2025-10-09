@@ -4,6 +4,7 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 import { useRouter } from 'next/navigation';
 import { api, User } from '../services/api';
 
+
 interface AuthContextType {
   user: User | null;
   loading: boolean;
@@ -57,9 +58,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(userData);
 
       router.push('/profile');
-    } catch (err: any) {
-      console.error('❌ Login failed:', err);
-      throw new Error(err?.message || 'Login gagal, periksa email/password');
+    } catch (err: unknown) {
+      console.error('Login failed:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Login gagal, periksa email/password';
+      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -70,9 +72,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       await api.register({ username, email, password });
       await login(username, password);
-    } catch (err: any) {
-      console.error('❌ Registration failed:', err);
-      throw new Error(err?.message || 'Registrasi gagal');
+    } catch (err: unknown) {
+      console.error('Registration failed:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Registrasi gagal';
+      throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
