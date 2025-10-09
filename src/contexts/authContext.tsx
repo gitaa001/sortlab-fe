@@ -1,13 +1,13 @@
 'use client';
 
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
-import { api, User, AuthResponse } from '../services/api';
 import { useRouter } from 'next/navigation';
+import { api, User } from '../services/api';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   register: (username: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
@@ -15,22 +15,28 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-export const AuthProvider: React.FC<{children: ReactNode}> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  // Cek apakah user sudah login berdasarkan token
   useEffect(() => {
-    // Check if user is logged in on page load
     const checkAuthStatus = async () => {
+      const token = localStorage.getItem('auth_token');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        const token = localStorage.getItem('auth_token');
-        if (token) {
-          const userData = await api.getMe();
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error('Auth check failed:', error);
+        // set token ke header kalau perlu
+        api.setToken(token);
+
+        const userData = await api.getMe();
+        setUser(userData);
+      } catch (err) {
+        console.error('❌ Auth check failed:', err);
         localStorage.removeItem('auth_token');
       } finally {
         setLoading(false);
@@ -40,16 +46,20 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      await api.login(username, password);
+      const { token } = await api.login(email, password);
+      localStorage.setItem('auth_token', token);
+      api.setToken(token);
+
       const userData = await api.getMe();
       setUser(userData);
-      router.push('/dashboard');
-    } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
+
+      router.push('/profile');
+    } catch (err: any) {
+      console.error('❌ Login failed:', err);
+      throw new Error(err?.message || 'Login gagal, periksa email/password');
     } finally {
       setLoading(false);
     }
@@ -59,31 +69,30 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({ children }) => {
     setLoading(true);
     try {
       await api.register({ username, email, password });
-      // Automatically log in after successful registration
       await login(username, password);
-    } catch (error) {
-      console.error('Registration failed:', error);
-      throw error;
+    } catch (err: any) {
+      console.error('❌ Registration failed:', err);
+      throw new Error(err?.message || 'Registrasi gagal');
     } finally {
       setLoading(false);
     }
   };
 
   const logout = () => {
-    api.logout();
+    localStorage.removeItem('auth_token');
     setUser(null);
     router.push('/');
   };
 
   return (
-    <AuthContext.Provider 
+    <AuthContext.Provider
       value={{
         user,
         loading,
         login,
         register,
         logout,
-        isAuthenticated: !!user
+        isAuthenticated: !!user,
       }}
     >
       {children}

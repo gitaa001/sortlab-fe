@@ -1,81 +1,97 @@
-"use client"
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { ChevronDown, User, LogOut } from 'lucide-react';
-import { useState } from 'react';
-import { useAuth } from '@/contexts/authContext';
-import { Button } from '@/ui/button';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { ChevronDown, User, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/authContext";
+import { Button } from "@/ui/button";
 
 export default function Navbar() {
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated, loading } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleUserMenuClick = () => {
-    setIsUserMenuOpen(!isUserMenuOpen);
-    setIsServicesOpen(false);
-    setIsAboutOpen(false);
+    setIsUserMenuOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    const handleClickOutside = () => setIsUserMenuOpen(false);
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  // Jangan render navbar sebelum auth selesai dicek (biar gak flicker)
+  if (loading) return null;
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 px-10">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-3 items-center h-16">
+          {/* === LEFT === */}
           <div className="flex items-center justify-start">
             <Link href="/" className="text-2xl font-bold text-[#471BCC]">
               SortLab
             </Link>
           </div>
+
+          {/* === CENTER MENU === */}
           <div className="flex justify-center">
             <div className="flex items-center space-x-8">
-              <div className="relative">
-                <Link href="/practice" className={`text-m hover:text-gray-700 ${pathname === '/practice' ? 'text-[#471BCC] font-semibold' : 'text-black'}`}>
-                  Practice
+              {[
+                { href: "/practice", label: "Practice" },
+                { href: "/compete", label: "Compete" },
+                { href: "/leaderboard", label: "Leaderboard" },
+              ].map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`text-m hover:text-gray-700 ${
+                    pathname === href
+                      ? "text-[#471BCC] font-semibold"
+                      : "text-black"
+                  }`}
+                >
+                  {label}
                 </Link>
-              </div>
-              <div className="relative">
-                <Link href="/compete" className={`text-m hover:text-gray-700 ${pathname === '/compete' ? 'text-[#471BCC] font-semibold' : 'text-black'}`}>
-                  Compete
-                </Link>
-              </div>
-              <div className="relative">
-                <Link href="/leaderboard" className={`text-m hover:text-gray-700 ${pathname === '/leaderboard' ? 'text-[#471BCC] font-semibold' : 'text-black'}`}>
-                  Leaderboard
-                </Link>
-              </div>
+              ))}
             </div>
           </div>
+
+          {/* === RIGHT SECTION === */}
           <div className="flex items-center justify-end space-x-4">
             {isAuthenticated ? (
               <div className="relative">
                 <button
-                  onClick={handleUserMenuClick}
+                  onClick={(e) => {
+                    e.stopPropagation(); // biar klik di tombol gak nutup menu
+                    handleUserMenuClick();
+                  }}
                   className="inline-flex items-center text-m font-medium text-black hover:text-gray-700"
                 >
                   <User className="mr-1 h-5 w-5" />
-                  {user?.username}
+                  {user?.username || "User"}
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
+
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-[0px_0px_10px_rgba(0,0,0,0.1)] bg-white">
+                  <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white border border-gray-100">
                     <div className="py-1" role="menu">
                       <Link
-                        href="/dashboard"
+                        href="/profile"
                         className="block px-6 py-2 text-sm font-medium text-black hover:text-gray-700"
-                        role="menuitem"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
-                        Dashboard
+                        Profile
                       </Link>
                       <button
                         className="block w-full text-left px-6 py-2 text-sm font-medium text-red-600 hover:text-red-800"
-                        role="menuitem"
                         onClick={() => {
                           logout();
                           setIsUserMenuOpen(false);
+                          router.push("/");
                         }}
                       >
                         <span className="flex items-center">

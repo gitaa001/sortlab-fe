@@ -2,25 +2,41 @@
 
 import Navbar from "@/component/navbar";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/authContext"; // ⬅️ Tambahkan ini!
 
 export default function SignInPage() {
+  const router = useRouter();
+  const { login } = useAuth(); // ⬅️ Ambil fungsi login dari context
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login with:", { email, password });
+    setLoading(true);
+
+    try {
+      // ✅ Gunakan fungsi login dari context (bukan fetch manual)
+      await login(email, password);
+      router.push("/profile"); // arahkan ke halaman profile
+    } catch (err: any) {
+      alert(err.message || "Login gagal. Coba lagi ya!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-cover bg-center bg-no-repeat" style={{backgroundImage: 'url("/quiz7.jpg")'}}>
-      {/* Navbar */}
-      <Navbar />
+    <div
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: 'url("/quiz7.jpg")' }}
+    >
+      <Navbar /> {/* ⬅️ Navbar tetap di sini */}
 
       {/* Main Section */}
       <div className="flex items-center justify-center px-4 py-60">
         <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden max-w-4xl w-full">
-          
           {/* Left Illustration */}
           <div className="hidden md:flex w-1/2 bg-gray-100 items-center justify-center p-8">
             <img
@@ -32,7 +48,6 @@ export default function SignInPage() {
 
           {/* Right Form */}
           <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
-            {/* Heading */}
             <h2 className="text-3xl font-bold text-gray-800 mb-2">Sign in</h2>
             <p className="text-sm text-gray-500 mb-6">
               Don’t have an account?{" "}
@@ -41,7 +56,6 @@ export default function SignInPage() {
               </a>
             </p>
 
-            {/* Social Login */}
             <button className="flex items-center justify-center gap-2 w-full border px-4 py-2 mb-10 rounded-lg hover:bg-gray-50">
               <img src="/google2.png" alt="Google" className="w-5 h-5" />
               <span className="text-sm">Google</span>
@@ -79,9 +93,14 @@ export default function SignInPage() {
               />
               <button
                 type="submit"
-                className="w-full bg-[#471BCC] text-white py-2 rounded-lg hover:bg-[#6F4CD8] font-medium"
+                disabled={loading}
+                className={`w-full text-white py-2 rounded-lg font-medium transition ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#471BCC] hover:bg-[#6F4CD8]"
+                }`}
               >
-                Start training
+                {loading ? "Signing in..." : "Start training"}
               </button>
             </form>
           </div>
