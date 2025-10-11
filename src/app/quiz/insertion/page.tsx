@@ -47,6 +47,7 @@ export default function Page() {
                             question={quiz.question}
                             array={quiz.array}
                             correctAnswer={quiz.correctAnswer}
+                            topic="insertionSort"
                         />
                     ))}
                 </div>

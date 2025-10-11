@@ -31,7 +31,6 @@ export default function Page() {
 
     return (
         <div className="min-h-screen bg-white">
-            <Navbar />
             
             <div className="px-20 mt-20">
                 <Breadcrumb items={breadcrumbItems} />
@@ -48,6 +47,7 @@ export default function Page() {
                             question={quiz.question}
                             array={quiz.array}
                             correctAnswer={quiz.correctAnswer}
+                            topic="bubbleSort"
                         />
                     ))}
                 </div>
