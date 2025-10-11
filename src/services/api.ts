@@ -116,7 +116,7 @@ export const api = {
   },
 
   updateScore: async (userId: string, points: number): Promise<{ totalPoints: number }> => {
-    const response = await fetch(`${API_BASE_URL}/api/user/update-score`, {
+    const response = await fetch(`${API_BASE_URL}/api/auth/update-score`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -135,7 +135,7 @@ export const api = {
   },
 
   updateProgress: async (userId: string, topic: string): Promise<{ progress: Record<string, boolean> }> => {
-    const response = await fetch(`${API_BASE_URL}/api/user/update-progress`, {
+    const response = await fetch(`${API_BASE_URL}/api/auth/update-progress`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
