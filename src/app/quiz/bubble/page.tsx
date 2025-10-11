@@ -54,7 +54,7 @@ export default function Page() {
             </div>
 
             <div className="flex justify-center mt-2 mb-10 pt-6">
-                <Link href="/practice">
+                <Link href="/compete">
                     <button className="bg-purple-500 text-white px-8 py-3 rounded-lg hover:bg-purple-600 font-semibold">
                         Finish Quiz
                     </button>
