@@ -1,11 +1,28 @@
 const API_BASE_URL = 'https://sortlab-be-production.up.railway.app'; 
 
 // ===== Interfaces =====
+export interface QuizProgress {
+  score: number;
+  done: boolean;
+}
+
 export interface User {
-  quizScore: string;
-  id: number;
+  _id: string;
   username: string;
   email: string;
+  totalPoints: number;
+  progressPractice: {
+    bubbleSort: boolean;
+    selectionSort: boolean;
+    insertionSort: boolean;
+    mergeSort: boolean;
+  };
+  progressCompete: {
+    bubbleSort: QuizProgress;
+    selectionSort: QuizProgress;
+    insertionSort: QuizProgress;
+    mergeSort: QuizProgress;
+  };
 }
 
 export interface LoginRequest {
@@ -98,8 +115,48 @@ export const api = {
     return await response.json();
   },
 
+  updateScore: async (userId: string, points: number): Promise<{ totalPoints: number }> => {
+    const response = await fetch(`${API_BASE_URL}/api/user/update-score`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...api.getAuthHeaders(),
+      },
+      body: JSON.stringify({ userId, points }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to update score");
+    }
+
+    return data; // { totalPoints: number }
+  },
+
+  updateProgress: async (userId: string, topic: string): Promise<{ progress: Record<string, boolean> }> => {
+    const response = await fetch(`${API_BASE_URL}/api/user/update-progress`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...api.getAuthHeaders(),
+      },
+      body: JSON.stringify({ userId, topic }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to update progress");
+    }
+
+    return data;
+  },
+
   logout: (): void => {
     authToken = null;
     localStorage.removeItem('auth_token');
   },
 };
+
+

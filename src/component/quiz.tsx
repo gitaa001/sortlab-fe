@@ -2,25 +2,26 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { api } from "@/services/api";
 
 interface QuizProps {
   question: string;
   array: number[];
   correctAnswer: number[];
+  onScoreUpdate?: (score: number) => void;
 }
 
-export default function Quiz({ question, array, correctAnswer }: QuizProps) {
+export default function Quiz({ question, array, correctAnswer, onScoreUpdate }: QuizProps) {
   const [answer, setAnswer] = useState<string[]>(Array(array.length).fill(""));
   const [result, setResult] = useState<null | boolean>(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [attempts, setAttempts] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [points, setPoints] = useState(0); // ✅ poin per kuis
-  const [totalPoints, setTotalPoints] = useState(0); // ✅ poin akumulasi user
+  const [points, setPoints] = useState(0); // poin per kuis
+  const [totalPoints, setTotalPoints] = useState(0); // poin akumulasi user
   const router = useRouter();
 
   useEffect(() => {
-    // ambil poin akumulasi dari localStorage saat load
     const savedPoints = localStorage.getItem("quizPoints");
     if (savedPoints) {
       setTotalPoints(Number(savedPoints));
@@ -49,10 +50,10 @@ export default function Quiz({ question, array, correctAnswer }: QuizProps) {
       else if (attempts === 2) earned = 2;
 
       setPoints(earned);
+      if (onScoreUpdate) onScoreUpdate(earned);
       const newTotal = totalPoints + earned;
       setTotalPoints(newTotal);
 
-      // simpan ke localStorage (dummy account)
       localStorage.setItem("quizPoints", newTotal.toString());
     } else {
       setAttempts((prev) => prev + 1);
@@ -73,8 +74,15 @@ export default function Quiz({ question, array, correctAnswer }: QuizProps) {
     }
   };
 
-  const handleFinish = () => {
-    router.push("/quiz/finished");
+  const handleFinish = async () => {
+    try {
+      const userData = await api.getMe();
+      await api.updateScore(userData._id, points);
+      router.push("/quiz/finished");
+    } catch (error) {
+      console.error("Failed to update score:", error);
+      router.push("/quiz/finished");
+    }
   };
 
   return (
@@ -174,3 +182,4 @@ export default function Quiz({ question, array, correctAnswer }: QuizProps) {
     </div>
   );
 }
+

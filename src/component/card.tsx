@@ -5,7 +5,7 @@ import Link from "next/link";
 interface CardProps {
   image: string;
   title: string;
-  progress?: number;
+  progress?: string;
   link: string;
   hoverText?: string;
 }
@@ -37,7 +37,7 @@ export default function Card({ image, title, progress, link, hoverText }: CardPr
           <h3 className="font-semibold text-sm hover:underline">
             {title}
           </h3>
-          <span className="text-gray-500 text-xs">{progress}%</span>
+          <span className="text-gray-500 text-xs">{progress}</span>
         </div>
       </div>
     </Link>
