@@ -1,5 +1,4 @@
-// api.ts
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'https://sortlab-be-production.up.railway.app'; 
 
 // ===== Interfaces =====
 export interface User {
@@ -40,13 +39,11 @@ let authToken: string | null = null;
 
 // ===== API Object =====
 export const api = {
-  // Set token manually (dipakai di AuthContext)
   setToken: (token: string) => {
     authToken = token;
     localStorage.setItem('auth_token', token);
   },
 
-  // Ambil header Authorization
   getAuthHeaders: (): Record<string, string> => {
     const token = authToken || localStorage.getItem('auth_token');
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -68,11 +65,11 @@ export const api = {
     return await response.json();
   },
 
-  login: async (email: string, password: string): Promise<AuthResponse> => {
+  login: async (username: string, password: string): Promise<AuthResponse> => {
     const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }), 
     });
 
     const data = await response.json();
@@ -81,7 +78,7 @@ export const api = {
       throw new Error(data.message || data.error || "Login failed");
     }
 
-    api.setToken(data.token); // simpan token
+    api.setToken(data.token); 
     return data;
   },
 
