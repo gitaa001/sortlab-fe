@@ -29,12 +29,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Bungkus seluruh app dalam AuthProvider biar useAuth() bisa dipakai di semua komponen */}
         <AuthProvider>
-          {/* Navbar ditaruh di sini supaya muncul di semua halaman */}
           <Navbar />
-          {/* Tambahkan padding top biar konten gak ketimpa navbar fixed */}
-          <main className="pt-16">{children}</main>
+          <main>{children}</main>
         </AuthProvider>
       </body>
     </html>

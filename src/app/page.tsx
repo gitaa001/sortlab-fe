@@ -1,7 +1,6 @@
 'use client'
 import { Inter } from 'next/font/google'
 import Link from 'next/link';
-import Navbar from '@/component/navbar' 
 import { Button } from '@/ui/button';
 import { Video, CheckSquare, Award } from "lucide-react";
 import Footer from '@/component/footer';
@@ -13,14 +12,13 @@ const inter = Inter({ subsets: ['latin'] })
 
 const Page = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
+    <div className="bg-white pt-15">
 
       {/* Hero Section */}
-      <div className="relative flex flex-col pt-50 px-55 py-30">
+      <div className="relative flex flex-col px-45 py-40">
 
       <motion.div
-        className="absolute right-30 top-35 w-3/4 h-3/4"
+        className="absolute right-60 w-7/8 h-7/8 top-14"
         initial={{ opacity: 0, scale: 0.9, y: 40 }}
         animate={{ opacity: 0.6, scale: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
@@ -30,7 +28,7 @@ const Page = () => {
           alt="Hero Image"
           className="w-full h-full object-contain object-right"
           animate={{
-            y: [0, -10, 0], // naik turun pelan
+            y: [0, -10, 0], 
           }}
           transition={{
             duration: 4,
@@ -101,7 +99,7 @@ const Page = () => {
           </div>
 
           {/* Media partners */}
-          <div className="flex flex-col pt-30">
+          <div className="flex flex-col pt-30 pb-5">
             <h3 className="text-sm text-gray-700 mb-4">Featured On</h3>
             <div className="flex items-center gap-8">
               <img src="/google.png" alt="Google" className="h-6 w-auto" />

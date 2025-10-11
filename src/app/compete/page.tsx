@@ -49,18 +49,17 @@ const Page = () => {
     { image: '/quiz8.jpg', title: 'Merge Sort', key: 'mergeSort', link: '/quiz/merge' },
   ];
 
-  // 🔹 Tentukan status berdasarkan nilai kuis
   const getStatus = (quiz: QuizProgress): string => {
-    if (!quiz || quiz.score === null) return 'Not Yet Taken';
-    if (quiz.score >= 70) return 'Completed';
+    if (!quiz || quiz.score === null) return 'Not yet taken';
+    if (quiz.score >= 70) return 'Completed ✅';
     return 'Failed';
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col mt-5">
       <Navbar />
 
-      <div className="mt-16 px-20">
+      <div className="mt-16 px-45">
         {/* Hero Section */}
         <div className="py-20 bg-[#471BCC] text-center rounded-xl shadow mb-10 relative overflow-hidden">
           <div className="relative z-10 flex flex-col items-center">
@@ -77,7 +76,7 @@ const Page = () => {
         </div>
 
         {/* Cards Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 max-w-6xl mx-auto mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 max-w-8xl mx-auto mb-10">
           {quizzes.map((quiz, idx) => {
             const quizData = progress[quiz.key as keyof UserProgress];
             const status = getStatus(quizData);

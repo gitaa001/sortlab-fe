@@ -4,23 +4,79 @@ import Footer from '@/component/footer';
 import Navbar from '@/component/navbar';
 import { Trophy, Medal } from "lucide-react";
 import RemainingTime from '@/component/time-dummy';
+import { useState, useEffect } from 'react';
+import { api } from '@/services/api';
 
-// Dummy data placeholder (bisa diganti dari DB nanti)
-const leaderboardData = [
-  { rank: 1, name: "Blademir Malina Tori", username: "@popy_bob", wins: 443, quizzes: 20, points: 44872 },
-  { rank: 2, name: "Robert Fox", username: "@robert_fox", wins: 440, quizzes: 19, points: 42515 },
-  { rank: 3, name: "Molida Glinda", username: "@molida_glinda", wins: 436, quizzes: 18, points: 40550 },
-  { rank: 4, name: "Darlene Robertson", username: "@darlene_robertson", wins: 430, quizzes: 17, points: 39800 },
-  { rank: 5, name: "Jerome Bell", username: "@jerome_bell", wins: 425, quizzes: 16, points: 38500 },
-  { rank: 6, name: "Cameron Williamson", username: "@cameron_williamson", wins: 420, quizzes: 15, points: 37250 },
-  { rank: 7, name: "Courtney Henry", username: "@courtney_henry", wins: 415, quizzes: 14, points: 36000 },
-];
+interface ApiLeaderboardUser {
+  _id: string;
+  username: string;
+  email: string;
+  totalPoints: number;
+  completedQuizzes: number;
+}
+
+interface LeaderboardUser extends ApiLeaderboardUser {
+  rank: number;
+}
 
 const Page = () => {
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardUser[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchLeaderboard();
+  }, []);
+
+  const fetchLeaderboard = async () => {
+    try {
+      setLoading(true);
+      const data: ApiLeaderboardUser[] = await api.getLeaderboard(); 
+      
+      // Add ranking to data
+      const rankedData: LeaderboardUser[] = data.map((user: ApiLeaderboardUser, index: number) => ({
+        ...user,
+        rank: index + 1
+      }));
+      
+      setLeaderboardData(rankedData);
+    } catch (err) {
+      console.error('Failed to fetch leaderboard:', err);
+      setError('Failed to load leaderboard data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // ambil 3 besar untuk kotak medali
   const top3 = leaderboardData.slice(0, 3);
-  // ambil semua untuk global ranking
-  const globalRanking = leaderboardData;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Navbar />
+        <div className="mt-30 px-20 flex justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#471BCC] mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading leaderboard...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Navbar />
+        <div className="mt-30 px-20 flex justify-center">
+          <div className="text-center text-red-600">{error}</div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -33,62 +89,73 @@ const Page = () => {
         </div>
 
         {/* Header Info */}
-        <div className="grid grid-cols-3 gap-4 mb-5">
-          <div className="bg-[#471BCC] text-white flex flex-col items-center justify-center rounded-xl p-4 shadow">
-            <h2 className="text-sm opacity-80">Total Registered</h2>
-            <p className="text-2xl font-bold">1277</p>
-          </div>
-          <div className="bg-[#471BCC] text-white flex flex-col items-center justify-center rounded-xl p-4 shadow">
-            <h2 className="text-sm opacity-80">Total Participant</h2>
-            <p className="text-2xl font-bold">255</p>
+        <div className="grid grid-cols-2 gap-4 mb-5">
+          <div className="bg-[#471BCC] text-white flex flex-col items-center justify-center rounded-[15px] p-5 shadow">
+            <h2 className="text-sm opacity-80">Total Participants</h2>
+            <p className="text-3xl font-bold">{leaderboardData.length}</p>
           </div>
           <RemainingTime />
         </div>
 
         {/* Top 3 */}
-        <div className="grid grid-cols-3 gap-6 mb-10">
-          {top3.map((user, idx) => {
-            const medalColors = ["text-yellow-400", "text-gray-300", "text-orange-400"];
-            return (
-              <div
-                key={user.rank}
-                className="bg-[#471BCC] text-white rounded-xl p-6 flex flex-col items-center shadow-lg"
-              >
-                <Medal className={`${medalColors[idx]} w-10 h-10 mb-2`} />
-                <h3 className="text-lg font-bold">{user.name}</h3>
-                <p className="text-sm opacity-80">{user.username}</p>
-                <p className="text-2xl font-bold mt-3">{user.points.toLocaleString()} pts</p>
-                <p className="text-sm">{user.wins} Wins · {user.quizzes} Quizzes</p>
-              </div>
-            );
-          })}
-        </div>
+        {top3.length > 0 && (
+          <div className="grid grid-cols-3 gap-6 mb-10">
+            {top3.map((user, idx) => {
+              const medalColors = ["text-yellow-400", "text-gray-300", "text-orange-400"];
+              return (
+                <div
+                  key={user._id}
+                  className="bg-[#471BCC] text-white rounded-xl p-6 flex flex-col items-center shadow-lg"
+                >
+                  <Medal className={`${medalColors[idx]} w-10 h-10 mb-2`} />
+                  <h3 className="text-lg font-bold">{user.username}</h3>
+                  <p className="text-sm opacity-80">{user.email}</p>
+                  <p className="text-2xl font-bold mt-3">{user.totalPoints.toLocaleString()} pts</p>
+                  <p className="text-sm">{user.completedQuizzes} Quizzes Completed</p>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Global Ranking */}
         <div className="bg-gray-50 border rounded-2xl shadow p-6 mb-10">
           <h2 className="text-xl font-bold mb-4 text-[#471BCC]">Global Ranking</h2>
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b text-gray-600">
-                <th className="p-2">Rank</th>
-                <th className="p-2">User</th>
-                <th className="p-2">Wins</th>
-                <th className="p-2">Quizzes</th>
-                <th className="p-2">Points</th>
-              </tr>
-            </thead>
-            <tbody>
-              {globalRanking.map((user) => (
-                <tr key={user.rank} className="border-b hover:bg-gray-100">
-                  <td className="p-2 font-bold text-[#471BCC]">{user.rank}</td>
-                  <td className="p-2">{user.name}</td>
-                  <td className="p-2">{user.wins}</td>
-                  <td className="p-2">{user.quizzes}</td>
-                  <td className="p-2 font-semibold">{user.points.toLocaleString()}</td>
+          
+          {leaderboardData.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">No data available yet.</p>
+            </div>
+          ) : (
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="border-b text-gray-600">
+                  <th className="p-3">Rank</th>
+                  <th className="p-3">Username</th>
+                  <th className="p-3">Email</th>
+                  <th className="p-3">Total Points</th>
+                  <th className="p-3">Quizzes Completed</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {leaderboardData.map((user) => (
+                  <tr key={user._id} className="border-b hover:bg-gray-100 transition-colors">
+                    <td className="p-3">
+                      <span className={`font-bold ${user.rank <= 3 ? 'text-[#471BCC]' : 'text-gray-700'}`}>
+                        #{user.rank}
+                      </span>
+                    </td>
+                    <td className="p-3 font-medium">{user.username}</td>
+                    <td className="p-3 text-gray-600">{user.email}</td>
+                    <td className="p-3 font-semibold text-[#471BCC]">
+                      {user.totalPoints.toLocaleString()} pts
+                    </td>
+                    <td className="p-3">{user.completedQuizzes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
 

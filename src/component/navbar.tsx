@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 px-10">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-3 items-center h-16">
           {/* === LEFT === */}
           <div className="flex items-center justify-start">
@@ -66,7 +66,7 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   onClick={(e) => {
-                    e.stopPropagation(); // biar klik di tombol gak nutup menu
+                    e.stopPropagation(); 
                     handleUserMenuClick();
                   }}
                   className="inline-flex items-center text-m font-medium text-black hover:text-gray-700"

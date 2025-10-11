@@ -44,15 +44,13 @@ const Page = () => {
     { image: "/merge.png", title: "Merge Sort", key: "mergeSort", link: "/merge-sort" },
   ];
 
-  const getStatus = (done: boolean): string => (done ? "Done ✅" : "Not Yet Studied");
+  const getStatus = (done: boolean): string => (done ? "Completed ✅" : "Not yet studied");
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      {/* Navbar */}
-      <Navbar />
+    <div className="min-h-screen bg-white flex flex-col mt-5">
 
       {/* Main Content */}
-      <div className="mt-16 px-20">
+      <div className="mt-16 px-45">
         {/* Hero Section */}
         <div className="py-20 bg-[#471BCC] text-center rounded-xl shadow mb-10 relative overflow-hidden">
           <div className="relative z-10 flex flex-col items-center">
@@ -68,7 +66,7 @@ const Page = () => {
         </div>
 
         {/* Cards Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 p-4 max-w-5xl mx-auto mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 max-w-8xl mx-auto mb-10">
           {practices.map((card, idx) => {
             const isDone = progress[card.key as keyof PracticeProgress];
             const status = getStatus(isDone);

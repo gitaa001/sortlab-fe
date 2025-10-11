@@ -8,10 +8,11 @@ interface QuizProps {
   question: string;
   array: number[];
   correctAnswer: number[];
+  topic: string;
   onScoreUpdate?: (score: number) => void;
 }
 
-export default function Quiz({ question, array, correctAnswer, onScoreUpdate }: QuizProps) {
+export default function Quiz({ question, array, correctAnswer, topic, onScoreUpdate }: QuizProps) {
   const [answer, setAnswer] = useState<string[]>(Array(array.length).fill(""));
   const [result, setResult] = useState<null | boolean>(null);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -77,7 +78,7 @@ export default function Quiz({ question, array, correctAnswer, onScoreUpdate }: 
   const handleFinish = async () => {
     try {
       const userData = await api.getMe();
-      await api.updateScore(userData._id, points);
+      await api.updateScore(userData._id, points, topic);
       router.push("/quiz/finished");
     } catch (error) {
       console.error("Failed to update score:", error);

@@ -51,6 +51,14 @@ export interface TextData {
   positions: { x: number; y: number }[];
 }
 
+export interface ApiLeaderboardUser {
+  _id: string;
+  username: string;
+  email: string;
+  totalPoints: number;
+  completedQuizzes: number;
+}
+
 // ===== Internal token state =====
 let authToken: string | null = null;
 
@@ -115,14 +123,14 @@ export const api = {
     return await response.json();
   },
 
-  updateScore: async (userId: string, points: number): Promise<{ totalPoints: number }> => {
+  updateScore: async (userId: string, points: number, topic: string): Promise<{ totalPoints: number }> => {
     const response = await fetch(`${API_BASE_URL}/api/auth/update-score`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         ...api.getAuthHeaders(),
       },
-      body: JSON.stringify({ userId, points }),
+      body: JSON.stringify({ userId, points, topic }),
     });
 
     const data = await response.json();
@@ -131,7 +139,7 @@ export const api = {
       throw new Error(data.message || "Failed to update score");
     }
 
-    return data; // { totalPoints: number }
+    return data;
   },
 
   updateProgress: async (userId: string, topic: string): Promise<{ progress: Record<string, boolean> }> => {
@@ -153,10 +161,21 @@ export const api = {
     return data;
   },
 
+  getLeaderboard: async (): Promise<ApiLeaderboardUser[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/auth/leaderboard`);
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.message || 'Failed to get leaderboard data');
+    }
+
+    return await response.json();
+  },
+
   logout: (): void => {
     authToken = null;
     localStorage.removeItem('auth_token');
-  },
+  }
 };
 
 

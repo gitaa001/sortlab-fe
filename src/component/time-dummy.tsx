@@ -10,7 +10,6 @@ export default function RemainingTime() {
   });
 
   useEffect(() => {
-    // Deadline dummy: 12 hari dari sekarang
     const deadline = new Date();
     deadline.setDate(deadline.getDate() + 12);
     deadline.setHours(deadline.getHours() + 6);
@@ -39,7 +38,7 @@ export default function RemainingTime() {
   return (
     <div className="bg-[#471BCC] text-white rounded-2xl p-4 shadow flex flex-col items-center justify-center">
       <h2 className="text-sm opacity-80 mb-1">Remaining Time</h2>
-      <p className="text-lg font-semibold tracking-wide">
+      <p className="text-3xl font-bold tracking-wide">
         {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m :{" "}
         {timeLeft.seconds}s
       </p>
