@@ -23,7 +23,7 @@ export default function Register() {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
+      const response = await fetch("https://sortlab-be-production.up.railway.app/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function Register() {
       if (response.ok) {
         console.log("✅ Register success:", data);
         alert("Registration successful! Please login.");
-        router.push("/login"); // redirect ke login
+        router.push("/login"); 
       } else {
         console.error("❌ Register failed:", data.message || data.error);
         alert(data.message || "Registration failed.");

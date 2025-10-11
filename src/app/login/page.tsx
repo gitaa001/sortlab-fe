@@ -3,11 +3,11 @@
 import Navbar from "@/component/navbar";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/authContext"; // ⬅️ Tambahkan ini!
+import { useAuth } from "@/contexts/authContext";
 
 export default function SignInPage() {
   const router = useRouter();
-  const { login } = useAuth(); // ⬅️ Ambil fungsi login dari context
+  const { login } = useAuth(); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,9 +17,8 @@ export default function SignInPage() {
     setLoading(true);
 
     try {
-      // ✅ Gunakan fungsi login dari context (bukan fetch manual)
       await login(email, password);
-      router.push("/profile"); // arahkan ke halaman profile
+      router.push("/profile"); 
     } catch (err: unknown) {
       const errorMessage =
         err instanceof Error ? err.message : "Login failed. Please try again.";
@@ -34,7 +33,7 @@ export default function SignInPage() {
       className="min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: 'url("/quiz7.jpg")' }}
     >
-      <Navbar /> {/* ⬅️ Navbar tetap di sini */}
+      <Navbar /> 
 
       {/* Main Section */}
       <div className="flex items-center justify-center px-4 py-60">
