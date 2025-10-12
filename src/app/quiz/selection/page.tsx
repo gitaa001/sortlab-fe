@@ -26,20 +26,30 @@ export default function Page() {
 
     const quizzes = [
         {
-            question: "Using Selection Sort on this array, how does the array look like after the FIRST iteration?",
+            question: "Selection Sort on [64, 25, 12, 22, 11]. After FIRST iteration, what's the array?",
             array: [64, 25, 12, 22, 11],
             correctAnswer: [11, 25, 12, 22, 64],
         },
         {
-            question: "Using Selection Sort, what does the array look like after the SECOND iteration?",
+            question: "Using Selection Sort on [29, 10, 14, 37, 13], what's the array after SECOND iteration?",
             array: [29, 10, 14, 37, 13],
             correctAnswer: [10, 13, 14, 37, 29],
         },
         {
-            question: "Selection Sort is performed on this array. How does the array look like after it is FULLY sorted?",
-            array: [5, 2, 4, 6, 1, 3],
-            correctAnswer: [1, 2, 3, 4, 5, 6],
+            question: "Selection Sort: [7, 3, 9, 1, 5]. After FIRST iteration, which element is in its final position?",
+            array: [7, 3, 9, 1, 5],
+            correctAnswer: [1, 3, 9, 7, 5], // 1 is in final position
         },
+        {
+            question: "Apply Selection Sort to [15, 8, 20, 3, 12]. What's the array after THIRD iteration?",
+            array: [15, 8, 20, 3, 12],
+            correctAnswer: [3, 8, 12, 20, 15],
+        },
+        {
+            question: "Selection Sort on [6, 9, 2, 4, 7]. After SECOND iteration, what's the result?",
+            array: [6, 9, 2, 4, 7],
+            correctAnswer: [2, 4, 9, 6, 7],
+        }
     ];
 
     const handleQuizComplete = (quizIndex: number, score: number) => {

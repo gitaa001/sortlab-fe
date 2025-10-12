@@ -22,20 +22,30 @@ export default function Page() {
 
     const quizzes = [
         {
-            question: "Using Bubble Sort on this array, how does the array look like after the FIRST run?",
+            question: "Using Bubble Sort on [7, 14, 11, 8, 9], how does the array look after the FIRST pass?",
             array: [7, 14, 11, 8, 9],
             correctAnswer: [7, 11, 8, 9, 14],
         },
         {
-            question: "Using Bubble Sort, what does the array look like after the SECOND run?",
+            question: "Using Bubble Sort on [5, 3, 8, 4, 2], what is the array after the SECOND pass?",
             array: [5, 3, 8, 4, 2],
             correctAnswer: [3, 4, 2, 5, 8],
         },
         {
-            question: "Bubble Sort is performed on this array. How does the array look like after it is FULLY sorted?",
-            array: [10, 2, 7, 5, 3],
-            correctAnswer: [2, 3, 5, 7, 10],
+            question: "Bubble Sort on [64, 34, 25, 12, 22, 11, 90]. What's the array after FIRST pass?",
+            array: [64, 34, 25, 12, 22, 11, 90],
+            correctAnswer: [34, 25, 12, 22, 11, 64, 90],
         },
+        {
+            question: "Using Bubble Sort, which element reaches its final position after the FIRST pass of [9, 5, 1, 4, 3]?",
+            array: [9, 5, 1, 4, 3],
+            correctAnswer: [5, 1, 4, 3, 9], 
+        },
+        {
+            question: "Bubble Sort on [3, 7, 1, 9, 2]. After how many passes will element 9 be in its correct position?",
+            array: [3, 7, 1, 9, 2],
+            correctAnswer: [3, 1, 7, 2, 9], 
+        }
     ];
 
     const handleQuizComplete = (quizIndex: number, score: number) => {

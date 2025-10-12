@@ -51,7 +51,7 @@ const Page = () => {
 
   const getStatus = (quiz: QuizProgress): string => {
     if (!quiz || quiz.score === null) return 'Not yet taken';
-    if (quiz.score >= 70) return 'Completed ✅';
+    if (quiz.score >= 60) return 'Completed ✅';
     return 'Failed';
   };
 

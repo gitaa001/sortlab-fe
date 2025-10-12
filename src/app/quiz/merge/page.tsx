@@ -22,19 +22,29 @@ export default function Page() {
 
     const quizzes = [
         {
-            question: "Using Merge Sort on this array, what are the LEFT and RIGHT subarrays after the FIRST split?", 
+            question: "Merge Sort: Split [38, 27, 43, 3] into two halves. What's the LEFT subarray?",
             array: [38, 27, 43, 3],
-            correctAnswer: [38, 27], 
+            correctAnswer: [38, 27],
         },
         {
-            question: "In Merge Sort, after splitting [5, 2, 4, 7] completely, what does the merge of [5] and [2] produce?",
-            array: [5, 2],
-            correctAnswer: [2, 5], 
+            question: "Merge two sorted arrays [1, 3, 5] and [2, 4, 6]. What's the merged result?",
+            array: [1, 3, 5, 2, 4, 6],
+            correctAnswer: [1, 2, 3, 4, 5, 6],
         },
         {
-            question: "Merge Sort is performed on this array. How does the array look like after it is FULLY sorted?",
-            array: [12, 11, 13, 5, 6, 7],
-            correctAnswer: [5, 6, 7, 11, 12, 13], 
+            question: "Merge Sort: Merge [3, 7, 9] and [1, 4, 8]. What's the final merged array?",
+            array: [3, 7, 9, 1, 4, 8],
+            correctAnswer: [1, 3, 4, 7, 8, 9],
+        },
+        {
+            question: "Split [16, 21, 11, 8, 12, 22] for Merge Sort. What's the RIGHT subarray?",
+            array: [16, 21, 11, 8, 12, 22],
+            correctAnswer: [8, 12, 22],
+        },
+        {
+            question: "Final challenge: Sort [25, 12, 18, 6, 30, 15, 9] completely using Merge Sort.",
+            array: [25, 12, 18, 6, 30, 15, 9],
+            correctAnswer: [6, 9, 12, 15, 18, 25, 30],
         },
     ];
 

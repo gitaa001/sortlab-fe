@@ -40,9 +40,9 @@ export default function ProfilePage() {
 
   // --- Helper for quiz status ---
   const getQuizStatus = (quiz: { score?: number }): string => {
-    if (quiz?.score === undefined) return "Not Yet Taken";
+    if (quiz?.score === undefined) return "Not yet taken";
     if (quiz.score >= 70) return `Completed (${quiz.score}%)`;
-    return `Failed (${quiz.score}%)`;
+    return `Failed: (${quiz.score}%)`;
   };
 
   return (
@@ -89,7 +89,7 @@ export default function ProfilePage() {
                         : "text-red-500 italic"
                     }`}
                   >
-                    {practiceProgress[key] ? "Done ✅" : "Not Yet Studied"}
+                    {practiceProgress[key] ? "Done ✅" : "Not yet studied"}
                   </span>
                 </li>
               ))}

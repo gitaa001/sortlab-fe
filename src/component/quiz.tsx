@@ -34,9 +34,9 @@ export default function Quiz({ question, array, correctAnswer, topic, onQuizComp
 
       // Hitung poin berdasarkan attempts
       let earned = 0;
-      if (attempts === 0) earned = 10;
-      else if (attempts === 1) earned = 5;
-      else if (attempts === 2) earned = 2;
+      if (attempts === 0) earned = 20;
+      else if (attempts === 1) earned = 15;
+      else if (attempts === 2) earned = 10;
 
       setPoints(earned);
       

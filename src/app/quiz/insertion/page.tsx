@@ -4,6 +4,7 @@ import Quiz from "@/component/quiz";
 import Breadcrumb from "@/component/breadcrumb";
 import Navbar from "@/component/navbar";
 import Footer from "@/component/footer";
+
 import { api } from '@/services/api';
 import { useAuth } from '@/contexts/authContext';
 import { useRouter } from 'next/navigation'; 
@@ -22,20 +23,30 @@ export default function Page() {
 
     const quizzes = [
         {
-            question: "Using Bubble Sort on this array, how does the array look like after the FIRST run?",
-            array: [7, 14, 11, 8, 9],
-            correctAnswer: [7, 11, 8, 9, 14],
-        },
-        {
-            question: "Using Bubble Sort, what does the array look like after the SECOND run?",
+            question: "Insertion Sort on [5, 3, 8, 4, 2]. After inserting element 3, what's the array?",
             array: [5, 3, 8, 4, 2],
-            correctAnswer: [3, 4, 2, 5, 8],
+            correctAnswer: [3, 5, 8, 4, 2],
         },
         {
-            question: "Bubble Sort is performed on this array. How does the array look like after it is FULLY sorted?",
-            array: [10, 2, 7, 5, 3],
-            correctAnswer: [2, 3, 5, 7, 10],
+            question: "Using Insertion Sort on [12, 11, 13, 5, 6]. After inserting element 11, what's the result?",
+            array: [12, 11, 13, 5, 6],
+            correctAnswer: [11, 12, 13, 5, 6],
         },
+        {
+            question: "Insertion Sort: [8, 3, 5, 4, 7, 6, 1, 2]. After inserting element 5, what's the array?",
+            array: [8, 3, 5, 4, 7, 6, 1, 2],
+            correctAnswer: [3, 5, 8, 4, 7, 6, 1, 2],
+        },
+        {
+            question: "Apply Insertion Sort to [9, 2, 6, 1, 3]. After inserting element 6, what's the result?",
+            array: [9, 2, 6, 1, 3],
+            correctAnswer: [2, 6, 9, 1, 3],
+        },
+        {
+            question: "Insertion Sort on [15, 7, 12, 8, 10]. After inserting element 12, what's the array?",
+            array: [15, 7, 12, 8, 10],
+            correctAnswer: [7, 12, 15, 8, 10],
+        }
     ];
 
     const handleQuizComplete = (quizIndex: number, score: number) => {
