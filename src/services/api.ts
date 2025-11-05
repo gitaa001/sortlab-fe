@@ -97,13 +97,14 @@ export const api = {
       body: JSON.stringify({ email, password }), 
     });
 
-    const data = await response.json();
+    // ✅ only read JSON once
+    const data = await response.json().catch(() => null);
 
     if (!response.ok) {
-      throw new Error(data.message || data.error || "Login failed");
+      throw new Error(data?.message || "Login failed");
     }
 
-    api.setToken(data.token); 
+    api.setToken(data.token);
     return data;
   },
 

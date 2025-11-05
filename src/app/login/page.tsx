@@ -3,17 +3,12 @@
 import Navbar from "@/component/navbar";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/authContext";
-import Image from "next/image"; // ✅ Import Next.js Image
+import Image from "next/image"; 
 
 export default function SignInPage() {
   const { login, loading, error, clearError } = useAuth(); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // ✅ Remove unused router import
-
-  useEffect(() => {
-    return () => clearError();
-  }, [clearError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +28,6 @@ export default function SignInPage() {
         <div className="flex bg-white rounded-2xl shadow-lg overflow-hidden max-w-4xl w-full">
           {/* Left Illustration */}
           <div className="hidden md:flex w-1/2 bg-gray-100 items-center justify-center p-8">
-            {/* ✅ Use Next.js Image component */}
             <Image
               src="/elmt.png"
               alt="Illustration"
@@ -47,7 +41,6 @@ export default function SignInPage() {
           <div className="w-full md:w-1/2 p-8 flex flex-col justify-center">
             <h2 className="text-3xl font-bold text-gray-800 mb-2">Sign in</h2>
             <p className="text-sm text-gray-500 mb-6">
-              {/* ✅ Fix apostrophe escape */}
               Don&apos;t have an account?{" "}
               <a href="/register" className="text-[#471BCC] hover:underline">
                 Sign up
@@ -55,7 +48,6 @@ export default function SignInPage() {
             </p>
 
             <button className="flex items-center justify-center gap-2 w-full border px-4 py-2 mb-10 rounded-lg hover:bg-gray-50">
-              {/* ✅ Use Next.js Image for Google icon */}
               <Image 
                 src="/google2.png" 
                 alt="Google" 
