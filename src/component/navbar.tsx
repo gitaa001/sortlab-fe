@@ -41,8 +41,8 @@ export default function Navbar() {
           <div className="flex justify-center">
             <div className="flex items-center space-x-8">
               {[
-                { href: "/practice", label: "Practice" },
-                { href: "/compete", label: "Compete" },
+                { href: "/practice", label: "Learn" },
+                { href: "/compete", label: "Practice" },
                 { href: "/leaderboard", label: "Leaderboard" },
               ].map(({ href, label }) => (
                 <Link
